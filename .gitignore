@@ -1,0 +1,13 @@
+### Local tests and debug dirs
+/~tst/
+/~dbg/
+
+### Composer ###
+composer.phar
+/vendor/
+
+### PHP Unit ###
+/.phpunit.result.cache
+
+### VSCode ###
+/LyxLib.code-workspace
