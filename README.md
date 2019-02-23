@@ -4,14 +4,14 @@ Lyx is a library of handfull PHP classes and functions. This is by no means a "p
 
 ## Requirements
 
-PHP needs to be a minimum version of PHP 7.1.0. It's began with PHP 5.2 when I started building it, but there is no point supporting older versions < 7.1 of PHP. Some parts of the code may be in older PHP code style/methods, but I'll fix all those library parts maybe the help of some other people that may be intersting or find itr useful.
+PHP needs to be a minimum version of PHP 7.1.0. It's began with PHP 5.2 when I started building it, but there is no point supporting older versions < 7.1 of PHP. Some parts of the code may be in older PHP code style/methods, but I'll fix all those library parts maybe with the help of some other people that may be intersting or find itr useful.
 
 ## Installation
 
 ### Using composer
 
 ```bash
-composer install clytras/lyx
+composer require clytras/lyx
 ```
 
 ### Downloading (not using autoloader)
@@ -26,8 +26,8 @@ Test cases are not implemented yet, but there will be detailed and full feature 
 
 Examples are located inside the `\examples` directory. There are currently not many example cases covered, but there will be more added in the future.
 
-- `Lyx\Strings\Str::format(format($text, $params = [], $options = false)`<br>
-`Str::format` params, support single array, associative  nested arrays and even constants. Single array params are supported by numbers representing element index ex. `{0}`, `{1}` etc. Associative  arrays params can be nested named like `{param.arg1}`. It supports numbers zero padding like `{0,5}` will produce `00123` when a number `123` will be passed. Floating point precision is supported like `{0,.4}` will produce `123.4500` when a number `123.45` will be passed. Padding and floating point precision can be combined like `{0,5.4}` will produce `00123.4500` when `123.45` passed. If we want to separate thousands using thousands separator, we add a slash after the zero padding number like `{0,/.2}` will produce `10,000.00` with the number `10000`. It also converts numbers to hexadecimal, octal and binary formats using `X` (or `x` for lowercase) for hex, `O` for octal and `B` for binary like `{0:X}` will produce `FE0` when `0xfe0` or `4064` will be passed; `111111100000` with `{0:B}`. Number converters also support zero padding `{0:x,6}` will produce `000fe0` when `4064` passed.
+- `Lyx\Strings\Str::format($text, $params = [], $options = false)`<br>
+`Str::format` params, support single array, associative  nested arrays and even constants. Single array params are supported by numbers representing element index ex. `{0}`, `{1}` etc. Associative  array params can be nested named like `{param.arg1}`. It supports numbers zero padding like `{0,5}` will produce `00123` when a number `123` will be passed. Floating point precision is supported like `{0,.4}` will produce `123.4500` when a number `123.45` will be passed. Padding and floating point precision can be combined like `{0,5.4}` will produce `00123.4500` when `123.45` passed. There is no floating point precision round methods implent yet but there will be added in the future. If we want to separate thousands using thousands separator, we add a slash after the zero padding number like `{0,/.2}` will produce `10,000.00` with the number `10000`. It also converts numbers to hexadecimal, octal and binary formats using `X` (or `x` for lowercase) for hex, `O` for octal and `B` for binary like `{0:X}` will produce `FE0` when `0xfe0` or `4064` will be passed; `111111100000` with `{0:B}`. Number converters also support zero padding `{0:x,6}` will produce `000fe0` when `4064` passed.
 
 ```PHP
 // Simple Str::format example
@@ -56,28 +56,6 @@ lyx_print(Str::format(
 ));
 
 // This is an assoc keys Case for Testing [Const test!] ('Case', 'Testing')
-```
-
-```PHP
-// Using assosiative nested arrays
-
-use Lyx\Strings\Str;
-
-lyx_print(Str::format(
-  "This is an assoc keys {example.arg1} for {purpose.a1} ('{example.arg2}', '{purpose.a2}')",
-  [
-    'example' => [
-      'arg1' => 'Example - Arg 1',
-      'arg2' => 'Ex - Arg 2'
-    ],
-    'purpose' => [
-      'a1' => 'Testing 1',
-      'a2' => 'Test 2'
-    ]
-  ]
-));
-
-// This is an assoc keys Example - Arg 1 for Testing 1 ('Ex - Arg 2', 'Test 2')
 ```
 
 ```PHP
