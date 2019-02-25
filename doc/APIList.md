@@ -635,7 +635,7 @@ Lyx\Strings\DateTime\Locales
     └─ getTimestamp();
 ```
 
-### `Lyx\System` namespace `Greek` class
+### `Lyx\System` namespace `Daemon` class
 
 ```PHP
 Lyx\System
@@ -654,7 +654,7 @@ Lyx\System
     └─ iterate($sleepSeconds = 0);
 ```
 
-### `Lyx\System` namespace `Greek` class
+### `Lyx\System` namespace `Fork` class
 
 ```PHP
 Lyx\System
