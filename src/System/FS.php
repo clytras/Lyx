@@ -38,15 +38,15 @@ class FS
     $result_files = [];
     $result_dirs = [];
     $options = array_merge([
-        'only_dirs' => false,
-        'dot_dirs' => true,
-        'hidden_dirs' => true,
-        'hidden_files' => true,
-        'recursive' => true,
-        'flat_model' => false,
-        'fs_include_path' => true,
-        'flat_model_root' => '',
-        'sort' => 'asc'
+      'only_dirs' => false,
+      'dot_dirs' => true,
+      'hidden_dirs' => true,
+      'hidden_files' => true,
+      'recursive' => true,
+      'flat_model' => false,
+      'fs_include_path' => true,
+      'flat_model_root' => '',
+      'sort' => 'asc'
     ], $user_options);
     
     $dir = self::slash($dir);
@@ -202,6 +202,33 @@ class FS
   
       }
       file_put_contents($filename, $out);
+    }
+  }
+
+  public static function killTree($dir, $user_options = [])
+  {
+    if(empty($dir) || $dir == '/' || $dir == '\\') {
+      return;
+    }
+
+    $options = array_merge([
+      'delete_root' => true
+    ], $user_options);
+    
+    $dir = self::slash($dir);
+    $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
+    $files = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::CHILD_FIRST);
+
+    foreach($files as $file) {
+      if($file->isDir()){
+        @rmdir($file->getRealPath());
+      } else {
+        @unlink($file->getRealPath());
+      }
+    }
+
+    if($options['delete_root']) {
+      @rmdir($dir);
     }
   }
 }

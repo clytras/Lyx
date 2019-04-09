@@ -703,7 +703,10 @@ Lyx\System
     │    'recursive' => true
     │  ]);
     ├─ ::replaceLine($filename, $search_pattern, $new_line, $append = false);
-    └─ ::removeLine($filename, $search_pattern);
+    ├─ ::removeLine($filename, $search_pattern);
+    ├─ ::killTree($dir, $user_options = [
+    │    'delete_root' => true
+    │  ]);
 ```
 
 ### `Lyx\System` namespace `Path` class

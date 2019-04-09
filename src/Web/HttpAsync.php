@@ -23,14 +23,14 @@ class HttpAsync
     set_time_limit(0);
     
     header('Content-type: text/html; charset=utf-8');
-    header('Content-Encoding: none;');
+    header('Content-Encoding: none');
     header('X-Accel-Buffering: no');
 
     ini_set('display_errors', '1');
     ini_set('output_buffering', 'Off');
     ini_set('zlib.output_compression', 0);
     ini_set('implicit_flush',1);
-    set_include_path(get_include_path() . PATH_SEPARATOR . "$_SERVER[DOCUMENT_ROOT]/wiznet/lib/");
+
     ob_implicit_flush(true);
     @ob_end_clean();
     @ob_end_flush();
