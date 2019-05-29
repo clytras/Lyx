@@ -6,6 +6,7 @@ class Updater
 {
   private $last_update = 0;
   private $ms_interval = 0;
+  private $ticks_interval = 0;
   private $every = 0;
   private $_fn_update = null;
 
@@ -22,7 +23,7 @@ class Updater
   
   public function start()
   {
-    $this->last_update = $this->_timemilliseconds();
+    $this->last_update = $this->ticks_interval != 0 ? $this->ticks_interval : $this->_timemilliseconds();
   }
   
   public function stop()
@@ -39,13 +40,22 @@ class Updater
   public function minutes()
   {
     $this->ms_interval = intval($this->every * 60 * 1000);
+    $this->ticks_interval = 0;
     return $this;
   }
   
   public function seconds()
   {
     $this->ms_interval = intval($this->every * 1000);
+    $this->ticks_interval = 0;
     return $this;
+  }
+  
+  public function ticks()
+  {
+      $this->ticks_interval = $this->every;
+      $this->ms_interval = 0;
+      return $this;
   }
   
   public function milliseconds()
@@ -56,8 +66,13 @@ class Updater
   
   public function needsUpdate()
   {
-    if($this->last_update && $this->ms_interval)
-      return $this->_timemilliseconds() > ($this->last_update + $this->ms_interval);
+    if($this->last_update) {
+      if($this->ms_interval) {
+        return $this->_timemilliseconds() > ($this->last_update + $this->ms_interval);
+      } elseif($this->ticks_interval) {
+        return ++$this->last_update >= $this->ticks_interval;
+      }
+    }
     return false;
   }
   
@@ -79,7 +94,7 @@ class Updater
     if($this->last_update > 0) {
       if(is_callable($this->_fn_update))
         call_user_func_array($this->_fn_update, func_get_args());
-      $this->last_update = $this->_timemilliseconds();
+      $this->last_update = $this->ticks_interval != 0 ? $this->ticks_interval : $this->_timemilliseconds();
     }
     return $this;
   }
